@@ -1,6 +1,6 @@
 ---
 type: component
-status: proposed
+status: active
 sources: ["[[architecture-2026-11-19]]"]
 canonical: ARCHITECTURE.md#2-components
 updated: 2026-11-19

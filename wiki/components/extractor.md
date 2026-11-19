@@ -1,6 +1,6 @@
 ---
 type: component
-status: proposed
+status: active
 sources: ["[[architecture-2026-11-19]]"]
 canonical: ARCHITECTURE.md#51-save-from-the-toolbar-f11f16
 updated: 2026-11-19

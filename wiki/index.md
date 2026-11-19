@@ -19,24 +19,27 @@ Catalog of every wiki page, one line each. Agents update it with every change. C
 
 ## Components
 
-- [[background-worker]] · Background service worker · proposed
-- [[dexie-store]] · Dexie store · proposed
-- [[extractor]] · Extractor · proposed
-- [[library-page]] · Library page · proposed
-- [[popup]] · Popup · proposed
-- [[search-worker]] · Search worker · proposed
+- [[background-worker]] · Background service worker · active
+- [[dexie-store]] · Dexie store · active
+- [[extractor]] · Extractor · active
+- [[library-page]] · Library page · active
+- [[popup]] · Popup · active
+- [[search-worker]] · Search worker · active
 
 ## Decisions
 
 - [[dog-ear-direction]] · Dog-ear visual direction · decided
 - [[encrypted-locked-shelf]] · Locked shelf is encrypted, Argon2id at 19 MiB · decided
+- [[index-sync-by-watermark]] · Index sync by watermark · proposed
 - [[keyword-search-not-semantic]] · Typo-tolerant keyword search, not semantic · decided
 - [[library-inside-extension]] · Library runs inside the extension · decided
+- [[locked-address-fingerprints]] · Locked address fingerprints · decided
 - [[library-layout]] · Library layout: search field plus category shelves · decided
 - [[no-server]] · No server of any kind · decided
 - [[safari-after-v1]] · Safari after v1 · decided
 - [[save-to-locked-command]] · Save to Locked is a separate command · decided
 - [[tech-stack]] · Tech stack · decided
+- [[typos-only-without-exact-match]] · Typos only for words without an exact match · proposed
 - [[unique-words-index]] · Index unique words per page · decided
 
 ## Concepts
@@ -47,8 +50,8 @@ Catalog of every wiki page, one line each. Agents update it with every change. C
 
 ## Questions
 
-- [[can-search-hit-20ms]] · Can search hit 20 ms at 10,000 pages? · open
-- [[firefox-e2e-runner]] · Which runner covers Firefox e2e? · open
+- [[can-search-hit-20ms]] · Can search hit 20 ms at 10,000 pages? · decided
+- [[firefox-e2e-runner]] · Which runner covers Firefox e2e? · decided
 
 ## Other
 

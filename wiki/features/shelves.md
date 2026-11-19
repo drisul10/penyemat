@@ -13,6 +13,8 @@ Saved links sit on shelves, one category per link. The starter set is only Read 
 
 - Requirements: PRD F3.1–F3.5. Rules: DESIGN.md Business rules.
 
+- Drag a card onto another shelf, an empty category, or the locked shelf to move it (PRD F3.6). Code: `src/entrypoints/library/drag.svelte.ts`.
+
 ## Related
 
 - [[library-layout]]

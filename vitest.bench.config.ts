@@ -1,0 +1,11 @@
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    include: ['tests/bench/**/*.bench.test.ts'],
+    environment: 'node',
+    testTimeout: 600_000,
+    silent: false,
+    reporters: ['verbose'],
+  },
+});

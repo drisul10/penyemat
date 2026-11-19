@@ -55,6 +55,9 @@ Consequences of C1 that the product must accept:
 | F2.7 | Each result shows a snippet from the page text with the matched words highlighted. | Snippet contains the matched words. |
 | F2.8 | Search runs fully on device, with no network request. | No network calls during search (devtools check). |
 | F2.9 | Results appear within 20 ms per query at 10,000 bookmarks on a mid-range laptop. | Decided 2026-11-19. Benchmark on a 10,000-page test library. |
+| F2.11 | Words also match inside longer words, like Typesense's infix search, when whole words find fewer than 20 pages. These pages rank after whole-word matches. | "nikah" finds "Menikah". Decided 2026-11-19, user: "I want like Typesense that can smartly word!" |
+| F2.12 | Shelves whose names match the query show above the page results as "Shelf · Recipes · 5 links"; opening one shows that shelf. The locked shelf shows no count while locked. | Decided 2026-11-19, user chose "Shelf match on top (Recommended)". |
+| F2.13 | When results span more than one category, chips above them (All, then each category with its count) narrow the list to one category. | Decided 2026-11-19, user chose "Filter results by category". |
 | F2.10 | Meaning-based search ("cheap flights" finds "budget airfare") is out of scope for v1. | Decided, user chose typo-tolerant keyword search. |
 
 Implementation: MiniSearch in a Web Worker, index persisted in IndexedDB (ARCHITECTURE.md).
@@ -69,6 +72,7 @@ Implementation: MiniSearch in a Web Worker, index persisted in IndexedDB (ARCHIT
 | F3.3 | Each link belongs to exactly one category. | Decided 2026-11-19. |
 | F3.4 | The library shows categories as shelves of folded cards under the search field. | Matches design.html. |
 | F3.5 | Deleting a link shows Undo for 10 seconds. Deleting a category asks for confirmation and moves its links to Unsorted; the dialog says how many move. | Decided 2026-11-19. |
+| F3.6 | A card can be dragged onto another shelf, an empty category, or the locked shelf to move it. Mouse drags at once; touch needs a long press so shelf rails still scroll. The ⋯ menu stays the keyboard way. Dropping on the locked shelf opens the Move to Locked confirmation. | Decided 2026-11-19, user: "YESS" to drag-to-move. |
 
 ### F4. Locked shelf
 
@@ -80,11 +84,14 @@ Implementation: MiniSearch in a Web Worker, index persisted in IndexedDB (ARCHIT
 | F4.4 | The key lives only in memory while the shelf is unlocked. It is never written to disk. | Key absent from storage after unlock (devtools check). |
 | F4.5 | Locked items never appear in search while locked. Once unlocked, they join search results until the shelf locks again. | Search before and after unlock. |
 | F4.6 | The shelf locks again when the last library tab closes, and after idle time the user sets in Settings: default 5 minutes, range 1 to 60. | Decided 2026-11-19. |
-| F4.7 | A "Save to Locked" command, in the right-click menu of the toolbar button and of pages (and on an optional keyboard shortcut the user sets in the browser), asks for the passphrase, then saves the page encrypted with no unencrypted copy ever written. The popup's "Locked" chip moves a page that was already saved, and says that traces of the unencrypted copy may stay on the device. | Decided 2026-11-19, revised the same day ("Separate 'Save to Locked' command"). |
+| F4.7 | A "Save to Locked" command, in the right-click menu of the toolbar button and of pages (and on an optional keyboard shortcut the user sets in the browser), asks for the passphrase, then saves the page encrypted with no unencrypted copy ever written. The popup's "Locked" chip, and "Move to Locked" in a card's ⋯ menu in the library, move a page that was already saved, and say that traces of the unencrypted copy may stay on the device. | Decided 2026-11-19, revised the same day ("Separate 'Save to Locked' command"; card menu: "Add Move to Locked"). |
 | F4.8 | A forgotten passphrase cannot be recovered. Setup must say this plainly and require the user to confirm before the first item is locked. | Setup screen copy and confirm step. |
 | F4.9 | Changing the passphrase re-encrypts the locked shelf. | Old passphrase stops working. |
 | F4.10 | The passphrase is at least 8 characters. | Decided 2026-11-19. A 7-character passphrase is refused. |
 | F4.11 | Wrong passphrase attempts have no limit and no delay. | Decided 2026-11-19. |
+| F4.12 | Clicking the toolbar button on a page already on the locked shelf writes nothing and says "Already in Locked", even while the shelf is locked. Each locked address keeps a salted SHA-256 fingerprint for this check. | Decided 2026-11-19, user: "Store address fingerprints (Recommended)". |
+| F4.13 | "Save a link" in the library has a Locked chip that saves the pasted page straight onto the locked shelf, encrypted before anything is written. | Decided 2026-11-19, user: "Also here, no option save to lock". |
+| F4.14 | A locked card's ⋯ menu has "Move to" with the user's categories. Moving decrypts the link and saves it as a normal link in that category, with Undo while the shelf is open. | Decided 2026-11-19, user: "On locked, it should also option 'MOVE TO'". |
 
 ### F5. Backup
 
@@ -95,6 +102,7 @@ Implementation: MiniSearch in a Web Worker, index persisted in IndexedDB (ARCHIT
 | F5.3 | Import reads that file into a library. | Export then import into a fresh install restores everything. |
 | F5.4 | On import, an address already in the library keeps whichever copy was saved more recently. Import ends with a count, for example "Imported 120, updated 8, skipped 3". | Decided 2026-11-19. |
 | F5.5 | **Proposed:** the library shows when the last export happened, so users know their backup's age. | |
+| F5.6 | Settings has Autosave, off by default. When on, Penyemat writes a backup when something changed, at most once an hour, to one file in the browser's Downloads folder (`Downloads/Penyemat/penyemat-backup.json`) that is overwritten each time. In Chromium browsers the user can choose any folder instead ("can we choose location instead of 'inside downloads?'", 2026-11-19); when the browser asks for permission again, backups go to Downloads until the user allows it. Firefox can only rename the folder inside Downloads. The last 7 autosaves are also kept in the browser and can be restored from Settings. | Decided 2026-11-19, user: "Autosave, default turned off"; "Add both (Recommended)" (permissions); "After changes, at most hourly (Recommended)"; "One file and backup on browser memory". |
 
 ## 5. Non-functional requirements
 
@@ -125,6 +133,7 @@ Implementation: MiniSearch in a Web Worker, index persisted in IndexedDB (ARCHIT
 | K4 | A user locks links, forgets the passphrase, and loses them. | F4.8 warning and confirm. Proposed: offer an export right after setup. |
 | K5 | Safari needs an Xcode wrapper app, a Mac, and an Apple developer account. | Moved after v1 (C3). |
 | K6 | An 8-character passphrase with no attempt limit can be guessed offline by anyone who copies the encrypted data or an export file. Argon2id runs at the OWASP minimum (19 MiB, 2 passes), chosen so libraries also unlock on phones. | Setup suggests a longer passphrase without requiring one. Parameters can be raised in a later version on passphrase change. |
+| K7 | Address fingerprints (F4.12) let anyone with a copy of the browser data or an export file test whether one specific address they guess is on the locked shelf. They can't list or read the shelf. | Accepted by the owner to stop plain duplicates of locked pages. Records saved before fingerprints get theirs on the next unlock. |
 
 ## 8. Open questions
 

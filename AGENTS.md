@@ -6,7 +6,7 @@ Instructions for coding agents working on Penyemat. Claude Code reads this file 
 
 Penyemat is a bookmark manager that runs entirely inside a browser extension. Users save a page in one click, sort it onto shelves, and find it again by any words from the page. One shelf can be locked and encrypted with a passphrase.
 
-Status: specification and design are done; no code yet. The first build task is scaffolding the stack in ARCHITECTURE.md.
+Status: v1 is built locally (2026-11-19): the extension, unit tests, Chromium and Firefox e2e suites, and the search benchmark. Nothing is published to a store yet.
 
 ## Read first
 

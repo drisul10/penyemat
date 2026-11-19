@@ -1,0 +1,51 @@
+{
+  "name": "penyemat",
+  "description": "Bookmark manager that runs entirely inside a browser extension.",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "postinstall": "wxt prepare",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run",
+    "e2e": "PENYEMAT_E2E=1 wxt build && playwright test",
+    "e2e:firefox": "PENYEMAT_E2E=1 wxt build -b firefox && node tests/e2e/firefox/run.mjs",
+    "bench": "vitest run --config vitest.bench.config.ts"
+  },
+  "dependencies": {
+    "@fontsource/work-sans": "^5.3.0",
+    "@fontsource/zilla-slab": "^5.3.0",
+    "@mozilla/readability": "^0.6.0",
+    "dexie": "^4.4.7",
+    "hash-wasm": "^4.13.0",
+    "minisearch": "^7.2.0",
+    "stemmer": "^2.0.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.8",
+    "@playwright/test": "^1.65.1",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/selenium-webdriver": "^4.35.7",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@wxt-dev/module-svelte": "^2.0.5",
+    "fake-indexeddb": "^6.2.8",
+    "selenium-webdriver": "^4.53.0",
+    "svelte": "^5.58.0",
+    "svelte-check": "^4.7.8",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.1",
+    "web-ext": "^10.8.0",
+    "wxt": "^0.21.5"
+  }
+}
