@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Penyemat library alternatives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --field:#FFC21A; --ink:#1E1605; --leaf:#FFFBF0; --umber:#5C4A1F; --tomato:#C2341A; --fold:#E9A800; --line:#EADFC2; --page:#E3E4E5; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--page); color:var(--ink); font:15px/1.5 "Work Sans", system-ui, sans-serif; padding:32px 16px 56px; }
+  .wrap { max-width:1200px; margin:0 auto; }
+  .intro h1 { font:700 24px/1.2 "Zilla Slab", serif; }
+  .intro p { color:#4A3F28; max-width:74ch; margin-top:6px; }
+  .criteria { margin-top:14px; padding-left:20px; font-size:14px; color:#3B2C08; max-width:90ch; }
+  .criteria li { margin-top:2px; }
+  .alt { margin-top:36px; }
+  .alt header { display:flex; gap:12px; align-items:baseline; flex-wrap:wrap; margin-bottom:10px; }
+  .alt h2 { font:700 22px/1.2 "Zilla Slab", serif; }
+  .alt .hyp { color:#4A3F28; font-size:14px; }
+  .frame { background:var(--leaf); border-radius:6px; overflow:hidden; box-shadow:0 0 0 1px #D6CCB0; }
+  .sample-note { font-size:12px; color:#4A3F28; margin-top:6px; }
+
+  /* shared */
+  .logo { font:700 20px/1 "Zilla Slab", serif; display:flex; align-items:center; gap:8px; }
+  .logo i { width:18px; height:22px; background:var(--ink); clip-path:polygon(0 0, 60% 0, 100% 35%, 100% 100%, 0 100%); }
+  .search { display:flex; align-items:center; gap:10px; background:var(--leaf); border:2px solid var(--ink); border-radius:4px; padding:10px 14px; }
+  .search svg { flex:none; }
+  .search span { color:var(--umber); }
+  .kbd { margin-left:auto; font-size:12px; color:var(--umber); border:1px solid #CDBF99; border-radius:3px; padding:1px 6px; }
+  .btn { background:var(--ink); color:var(--field); font-weight:600; font-size:14px; border:0; border-radius:4px; padding:9px 14px; white-space:nowrap; }
+  .row { position:relative; display:grid; grid-template-columns:28px 1fr auto; gap:12px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--line); }
+  .row::after { content:""; position:absolute; right:0; top:0; width:12px; height:12px; background:linear-gradient(225deg, var(--leaf) 50%, var(--fold) 50%); }
+  .fav { width:28px; height:28px; border-radius:4px; background:#F1E6C6; display:grid; place-items:center; font-weight:600; font-size:13px; color:var(--umber); }
+  .row .t { font-weight:600; line-height:1.3; }
+  .row .u { font-size:13px; color:var(--umber); }
+  .row .d { font-size:13px; color:var(--umber); font-variant-numeric:tabular-nums; }
+  .label { font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--umber); }
+
+  /* A Ask */
+  .a-band { background:var(--field); padding:20px 32px 40px; }
+  .a-top { display:flex; justify-content:space-between; align-items:center; }
+  .a-hero { max-width:680px; margin:36px auto 0; }
+  .a-hero h3 { font:700 32px/1.15 "Zilla Slab", serif; text-align:center; }
+  .a-hero .search { min-height:56px; margin-top:18px; font-size:17px; }
+  .a-hero p { text-align:center; font-size:14px; margin-top:10px; color:#3B2C08; }
+  .a-list { max-width:680px; margin:24px auto 32px; }
+  .a-list .label { margin:0 0 6px 16px; }
+
+  /* B Timeline */
+  .b-bar { background:var(--field); display:flex; align-items:center; gap:24px; padding:12px 24px; }
+  .b-bar .search { flex:1; max-width:560px; min-height:42px; }
+  .b-bar .btn { margin-left:auto; }
+  .b-body { display:grid; grid-template-columns:200px 1fr; min-height:520px; }
+  .b-rail { border-right:1px solid var(--line); padding:20px 16px; display:flex; flex-direction:column; gap:4px; font-size:14px; }
+  .b-rail a { color:var(--ink); text-decoration:none; padding:6px 10px; border-radius:4px; display:flex; justify-content:space-between; }
+  .b-rail a.on { background:#F6EBC9; font-weight:600; }
+  .b-rail a span { color:var(--umber); font-variant-numeric:tabular-nums; }
+  .b-main { padding:12px 24px 24px; }
+  .b-main .label { margin:16px 0 4px 16px; }
+
+  /* C Shelves */
+  .c-band { background:var(--field); padding:16px 32px 24px; }
+  .c-top { display:flex; align-items:center; gap:24px; }
+  .c-top .search { flex:1; min-height:46px; max-width:640px; }
+  .c-top .btn { margin-left:auto; }
+  .c-body { padding:8px 32px 32px; }
+  .shelf { margin-top:22px; }
+  .shelf-h { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .shelf-h b { font-size:15px; }
+  .shelf-h span { font-size:13px; color:var(--umber); }
+  .shelf-h a { margin-left:auto; font-size:13px; color:var(--ink); font-weight:600; }
+  .cards { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:14px; }
+  .card { position:relative; background:#FFF6DD; padding:14px; min-height:104px; clip-path:polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); border-radius:4px 0 4px 4px; }
+  .card::after { content:""; position:absolute; right:0; top:0; width:18px; height:18px; background:linear-gradient(225deg, var(--leaf) 50%, var(--fold) 50%); }
+  .card .t { font-weight:600; line-height:1.3; }
+  .card .d { font-size:13px; color:var(--umber); margin-top:8px; }
+
+  /* shared result row */
+  .result { max-width:680px; background:var(--leaf); border-radius:6px; box-shadow:0 0 0 1px #D6CCB0; }
+  .result .row { grid-template-columns:28px 1fr auto; align-items:start; }
+  .result .s { font-size:14px; color:#3B2C08; margin-top:6px; }
+  .result mark { background:none; color:var(--tomato); font-weight:600; }
+
+  @media (max-width:900px) {
+    .b-body { grid-template-columns:1fr; } .b-rail { display:none; }
+    .cards { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .a-band, .c-band { padding-left:16px; padding-right:16px; } .c-body { padding:8px 16px 24px; }
+    .c-top, .b-bar { flex-wrap:wrap; } .c-top .search, .b-bar .search { order:3; flex-basis:100%; max-width:none; }
+    .a-hero h3 { font-size:26px; }
+    .kbd { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="intro">
+  <h1>Library screen: three ways to find a link again</h1>
+  <p>All three use the Dog-ear direction and the same sample bookmarks. They differ in what the user sees before typing, which is the open question: do people come back with words they remember, a time they remember, or a site they remember? Pick one by letter.</p>
+  <ol class="criteria">
+    <li>A user finds a known link by typing a remembered phrase, results updating as they type.</li>
+    <li>The search field is the first thing seen at desktop and at 390px.</li>
+    <li>Each result shows the matched words in context, so it is recognised without opening it.</li>
+    <li>Saving takes one click and confirms within 400 ms, with the fold.</li>
+    <li>Marigold stays in the brand band and the save moment, never behind lists.</li>
+  </ol>
+</section>
+
+<!-- A -->
+<section class="alt">
+  <header><h2>A · Ask</h2><span class="hyp">Hypothesis: people come back with words they remember. One big search field; recent saves sit below as a short fallback.</span></header>
+  <div class="frame">
+    <div class="a-band">
+      <div class="a-top"><div class="logo"><i></i>Penyemat</div><button class="btn" type="button">Save a link</button></div>
+      <div class="a-hero">
+        <h3>What do you remember about it?</h3>
+        <div class="search">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="#1E1605" stroke-width="2"/><path d="M13 13l5 5" stroke="#1E1605" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Search inside your saved pages</span><span class="kbd">/</span>
+        </div>
+        <p>Searches titles, sites, and the full text of every page you save.</p>
+      </div>
+    </div>
+    <div class="a-list">
+      <div class="label">Recently saved</div>
+      <div class="row"><div class="fav">R</div><div><div class="t">Lemon ricotta pasta in 20 minutes</div><div class="u">recipes.example.com</div></div><div class="d">Today</div></div>
+      <div class="row"><div class="fav">R</div><div><div class="t">Weeknight tomato soup</div><div class="u">recipes.example.com</div></div><div class="d">Yesterday</div></div>
+      <div class="row"><div class="fav">H</div><div><div class="t">How to fix a leaky kitchen tap</div><div class="u">homefix.example.com</div></div><div class="d">Yesterday</div></div>
+      <div class="row"><div class="fav">T</div><div><div class="t">Lisbon on foot: a three-day walking plan</div><div class="u">travel.example.com</div></div><div class="d">14 Nov</div></div>
+      <div class="row"><div class="fav">T</div><div><div class="t">Best time to visit the Azores</div><div class="u">travel.example.com</div></div><div class="d">12 Nov</div></div>
+    </div>
+  </div>
+  <p class="sample-note">Sample data: titles, sites, and dates.</p>
+</section>
+
+<!-- B -->
+<section class="alt">
+  <header><h2>B · Timeline</h2><span class="hyp">Hypothesis: people remember roughly when they saved it. A compact search bar, then every save grouped by day, with a date rail to jump back.</span></header>
+  <div class="frame">
+    <div class="b-bar">
+      <div class="logo"><i></i>Penyemat</div>
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="#1E1605" stroke-width="2"/><path d="M13 13l5 5" stroke="#1E1605" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Search inside your saved pages</span><span class="kbd">/</span>
+      </div>
+      <button class="btn" type="button">Save a link</button>
+    </div>
+    <div class="b-body">
+      <nav class="b-rail" aria-label="Jump to date">
+        <a class="on" href="#">Today <span>1</span></a>
+        <a href="#">Yesterday <span>2</span></a>
+        <a href="#">Earlier in November <span>3</span></a>
+        <a href="#">October <span>1</span></a>
+      </nav>
+      <div class="b-main">
+        <div class="label">Today</div>
+        <div class="row"><div class="fav">R</div><div><div class="t">Lemon ricotta pasta in 20 minutes</div><div class="u">recipes.example.com</div></div><div class="d">09:12</div></div>
+        <div class="label">Yesterday</div>
+        <div class="row"><div class="fav">R</div><div><div class="t">Weeknight tomato soup</div><div class="u">recipes.example.com</div></div><div class="d">20:40</div></div>
+        <div class="row"><div class="fav">H</div><div><div class="t">How to fix a leaky kitchen tap</div><div class="u">homefix.example.com</div></div><div class="d">08:05</div></div>
+        <div class="label">Earlier in November</div>
+        <div class="row"><div class="fav">T</div><div><div class="t">Lisbon on foot: a three-day walking plan</div><div class="u">travel.example.com</div></div><div class="d">14 Nov</div></div>
+        <div class="row"><div class="fav">T</div><div><div class="t">Best time to visit the Azores</div><div class="u">travel.example.com</div></div><div class="d">12 Nov</div></div>
+        <div class="row"><div class="fav">M</div><div><div class="t">Understanding your energy bill</div><div class="u">money.example.com</div></div><div class="d">10 Nov</div></div>
+        <div class="label">October</div>
+        <div class="row"><div class="fav">S</div><div><div class="t">Choosing running shoes for flat feet</div><div class="u">health.example.com</div></div><div class="d">28 Oct</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="sample-note">Sample data: titles, sites, dates, times, and counts.</p>
+</section>
+
+<!-- C -->
+<section class="alt">
+  <header><h2>C · Shelves</h2><span class="hyp">Hypothesis: people remember the site it came from. Saves are grouped by site on shelves of folded cards; search sits above.</span></header>
+  <div class="frame">
+    <div class="c-band">
+      <div class="c-top">
+        <div class="logo"><i></i>Penyemat</div>
+        <div class="search">
+          <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="#1E1605" stroke-width="2"/><path d="M13 13l5 5" stroke="#1E1605" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Search inside your saved pages</span><span class="kbd">/</span>
+        </div>
+        <button class="btn" type="button">Save a link</button>
+      </div>
+    </div>
+    <div class="c-body">
+      <div class="shelf">
+        <div class="shelf-h"><div class="fav">R</div><b>recipes.example.com</b><span>3 saved</span><a href="#">See all</a></div>
+        <div class="cards">
+          <div class="card"><div class="t">Lemon ricotta pasta in 20 minutes</div><div class="d">Today</div></div>
+          <div class="card"><div class="t">Weeknight tomato soup</div><div class="d">Yesterday</div></div>
+          <div class="card"><div class="t">Beginner's guide to sourdough starter</div><div class="d">3 Nov</div></div>
+        </div>
+      </div>
+      <div class="shelf">
+        <div class="shelf-h"><div class="fav">T</div><b>travel.example.com</b><span>2 saved</span><a href="#">See all</a></div>
+        <div class="cards">
+          <div class="card"><div class="t">Lisbon on foot: a three-day walking plan</div><div class="d">14 Nov</div></div>
+          <div class="card"><div class="t">Best time to visit the Azores</div><div class="d">12 Nov</div></div>
+        </div>
+      </div>
+      <div class="shelf">
+        <div class="shelf-h"><div class="fav">H</div><b>homefix.example.com</b><span>1 saved</span><a href="#">See all</a></div>
+        <div class="cards">
+          <div class="card"><div class="t">How to fix a leaky kitchen tap</div><div class="d">Yesterday</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="sample-note">Sample data: titles, sites, dates, and counts.</p>
+</section>
+
+<!-- shared -->
+<section class="alt">
+  <header><h2>Shared by all three: a search result</h2><span class="hyp">Typing "lemon zest" turns any of the screens into this list. The matched words show in the page text, in tomato.</span></header>
+  <div class="result">
+    <div class="row"><div class="fav">R</div><div><div class="t">Lemon ricotta pasta in 20 minutes</div><div class="u">recipes.example.com</div><div class="s">…finish with <mark>lemon zest</mark> and a spoon of pasta water so the sauce clings…</div></div><div class="d">Today</div></div>
+    <div class="row"><div class="fav">R</div><div><div class="t">Beginner's guide to sourdough starter</div><div class="u">recipes.example.com</div><div class="s">…a variation with <mark>lemon zest</mark> and poppy seeds works once the starter is…</div></div><div class="d">3 Nov</div></div>
+  </div>
+  <p class="sample-note">Sample data: titles, sites, dates, and page text.</p>
+</section>
+
+</div>
+</body>
+</html>

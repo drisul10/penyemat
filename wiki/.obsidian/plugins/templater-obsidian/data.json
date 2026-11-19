@@ -1,0 +1,12 @@
+{
+  "templates_folder": "templates",
+  "trigger_on_file_creation": false,
+  "folder_templates": [
+    {"folder": "sources", "template": "templates/source.md"},
+    {"folder": "features", "template": "templates/feature.md"},
+    {"folder": "components", "template": "templates/component.md"},
+    {"folder": "decisions", "template": "templates/decision.md"},
+    {"folder": "concepts", "template": "templates/concept.md"},
+    {"folder": "questions", "template": "templates/question.md"}
+  ]
+}

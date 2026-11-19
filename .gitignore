@@ -1,0 +1,40 @@
+# Dependencies and build output
+node_modules/
+.output/
+.wxt/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.zip
+
+# Secrets and local environment (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.crx
+
+# Personal editor, OS, and AI-tool state (developer setup stays local)
+.gstack/
+.DS_Store
+.vscode/
+.idea/
+.claude/
+.cursor/
+.impeccable/
+CLAUDE.local.md
+*.local.md
+
+# Obsidian: keep shared vault config, ignore personal workspace and plugin binaries
+wiki/.obsidian/*
+!wiki/.obsidian/app.json
+!wiki/.obsidian/core-plugins.json
+!wiki/.obsidian/community-plugins.json
+!wiki/.obsidian/plugins/
+wiki/.obsidian/plugins/*
+!wiki/.obsidian/plugins/templater-obsidian/
+wiki/.obsidian/plugins/templater-obsidian/*
+!wiki/.obsidian/plugins/templater-obsidian/data.json

@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Penyemat directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Work+Sans:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;700&family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root { --page:#ECEEF0; --ink:#16181B; --muted:#50565D; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--page); color:var(--ink); font:15px/1.5 "Work Sans", system-ui, sans-serif; padding:32px 16px 48px; }
+  .intro { max-width:1320px; margin:0 auto 24px; }
+  .intro h1 { font-size:22px; line-height:1.25; }
+  .intro p { color:var(--muted); max-width:72ch; margin-top:6px; }
+  .intro dl { display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:12px; font-size:13px; }
+  .intro dt { font-weight:600; display:inline; } .intro dd { display:inline; color:var(--muted); }
+  .grid { max-width:1320px; margin:0 auto; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:20px; }
+  @media (max-width:1080px) { .grid { grid-template-columns:1fr; max-width:560px; } }
+  .tile { border-radius:6px; overflow:hidden; display:flex; flex-direction:column; }
+  .hero { height:260px; position:relative; overflow:hidden; }
+  .hero svg { width:100%; height:100%; display:block; }
+  .body { padding:20px; display:flex; flex-direction:column; gap:16px; flex:1; }
+  .num { font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+  .name { font-size:28px; line-height:1.15; margin-top:2px; }
+  .phil { font-size:14px; margin-top:6px; }
+  .swatches { display:flex; gap:6px; flex-wrap:wrap; }
+  .sw { width:calc(20% - 5px); min-width:56px; font-size:11px; line-height:1.3; }
+  .sw i { display:block; height:36px; border-radius:4px; margin-bottom:4px; }
+  .typeset .h { font-size:24px; line-height:1.2; }
+  .typeset .b { font-size:15px; margin-top:4px; }
+  .typeset .f { font-variant-numeric:tabular-nums; font-size:13px; margin-top:4px; }
+  .demo { display:flex; flex-direction:column; gap:12px; }
+  .btn { align-self:flex-start; border:0; font-size:15px; font-weight:600; padding:11px 18px; cursor:pointer; }
+  .card { padding:14px 16px; position:relative; }
+  .card .t { font-weight:600; font-size:15px; line-height:1.3; }
+  .card .u { font-size:12px; margin-top:2px; }
+  .card .s { font-size:13px; margin-top:8px; }
+  .meta { font-size:13px; display:grid; grid-template-columns:96px 1fr; gap:6px 12px; }
+  .meta b { font-weight:600; }
+  .sample { display:inline-block; margin-top:10px; font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:2px 6px; border-radius:3px; }
+
+  /* 1 Dog-ear */
+  .d1 { background:#FFC21A; color:#1E1605; font-family:"Work Sans", sans-serif; }
+  .d1 .name, .d1 .typeset .h { font-family:"Zilla Slab", serif; font-weight:700; }
+  .d1 .phil, .d1 .meta { color:#3B2C08; }
+  .d1 .btn { background:#1E1605; color:#FFC21A; border-radius:4px; }
+  .d1 .card { background:#FFFBF0; color:#1E1605; clip-path:polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%); border-radius:4px 0 4px 4px; }
+  .d1 .card::after { content:""; position:absolute; right:0; top:0; width:22px; height:22px; background:linear-gradient(225deg, #FFC21A 50%, #E9A800 50%); }
+  .d1 .card .u, .d1 .card .s { color:#5C4A1F; }
+  .d1 .sample { background:#1E1605; color:#FFC21A; }
+  .d1 mark { background:none; color:#C2341A; font-weight:600; }
+
+  /* 2 Index */
+  .d2 { background:#F3F6F9; color:#0F1B2A; font-family:"Hanken Grotesk", sans-serif; }
+  .d2 .name, .d2 .typeset .h { font-weight:700; letter-spacing:-.01em; }
+  .d2 .phil, .d2 .meta { color:#4A5868; }
+  .d2 .btn { background:#00756A; color:#FFF; border-radius:6px; font-family:inherit; }
+  .d2 .card { background:#FFF; border:1px solid #D9E0E7; border-radius:6px; }
+  .d2 .card .u, .d2 .card .s { color:#4A5868; }
+  .d2 .sample { background:#E4EAF0; color:#4A5868; }
+  .d2 mark { background:#FFE45C; color:#0F1B2A; padding:0 2px; border-radius:2px; }
+
+  /* 3 Wayfinder */
+  .d3 { background:#111315; color:#F4F4F0; font-family:"Overpass", sans-serif; }
+  .d3 .name, .d3 .typeset .h { font-weight:800; letter-spacing:-.005em; }
+  .d3 .phil, .d3 .meta { color:#C4C8CC; }
+  .d3 .typeset .f { font-family:"Overpass Mono", monospace; }
+  .d3 .btn { background:#FFB000; color:#111315; border-radius:0; font-family:inherit; font-weight:800; }
+  .d3 .card { background:#1C1F22; border-left:6px solid #2F62D9; }
+  .d3 .card .u, .d3 .card .s { color:#A9AEB3; }
+  .d3 .sample { background:#2A2E32; color:#C4C8CC; }
+  .d3 mark { background:none; color:#FFB000; font-weight:600; }
+  .bullet { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; color:#fff; font-weight:800; font-size:12px; margin-right:6px; vertical-align:-5px; }
+
+  .foot { max-width:1320px; margin:24px auto 0; font-size:13px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <h1>Penyemat: three visual directions</h1>
+  <p>Pick one by number, or combine two. Each tile shows the brand world. Bookmark titles, sites, and counts in the cards are sample data.</p>
+  <dl>
+    <div><dt>Audience</dt> <dd>General web users</dd></div>
+    <div><dt>Main job</dt> <dd>Find a saved link again</dd></div>
+    <div><dt>Why choose it</dt> <dd>Full-text search of page content</dd></div>
+    <div><dt>Character</dt> <dd>Quick, sharp, dependable</dd></div>
+    <div><dt>Category default declined</dt> <dd>White page, blue accent, thumbnail card grid, folder sidebar</dd></div>
+  </dl>
+</header>
+
+<main class="grid">
+
+  <!-- 1 DOG-EAR -->
+  <article class="tile d1">
+    <div class="hero" aria-hidden="true">
+      <svg viewBox="0 0 420 260" preserveAspectRatio="xMidYMid slice">
+        <rect width="420" height="260" fill="#FFC21A"/>
+        <g transform="translate(118 46) rotate(-8)">
+          <polygon points="0,0 150,0 186,36 186,170 0,170" fill="#F4E9C8"/>
+          <polygon points="150,0 186,36 150,36" fill="#D9A300"/>
+        </g>
+        <g transform="translate(110 40) rotate(3)">
+          <polygon points="0,0 160,0 196,36 196,176 0,176" fill="#FFF6DD"/>
+          <polygon points="160,0 196,36 160,36" fill="#E3AE00"/>
+          <rect x="18" y="26" width="110" height="10" rx="2" fill="#1E1605"/>
+          <rect x="18" y="46" width="150" height="6" rx="2" fill="#B9A577"/>
+          <rect x="18" y="60" width="138" height="6" rx="2" fill="#B9A577"/>
+          <rect x="18" y="74" width="72" height="6" rx="2" fill="#B9A577"/>
+          <rect x="94" y="74" width="46" height="6" rx="2" fill="#C2341A"/>
+          <rect x="18" y="88" width="120" height="6" rx="2" fill="#B9A577"/>
+          <rect x="18" y="128" width="70" height="8" rx="2" fill="#5C4A1F"/>
+        </g>
+        <g transform="translate(150 64) rotate(12)">
+          <polygon points="0,0 170,0 206,36 206,180 0,180" fill="#FFFBF0" stroke="#1E1605" stroke-width="2"/>
+          <polygon points="170,0 206,36 170,36" fill="#FFC21A" stroke="#1E1605" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M170 36 L206 36" stroke="#1E1605" stroke-width="2"/>
+          <rect x="20" y="30" width="120" height="12" rx="2" fill="#1E1605"/>
+          <rect x="20" y="54" width="160" height="7" rx="2" fill="#B9A577"/>
+          <rect x="20" y="69" width="80" height="7" rx="2" fill="#B9A577"/>
+          <rect x="104" y="69" width="56" height="7" rx="2" fill="#C2341A"/>
+          <rect x="20" y="84" width="150" height="7" rx="2" fill="#B9A577"/>
+          <rect x="20" y="99" width="110" height="7" rx="2" fill="#B9A577"/>
+        </g>
+      </svg>
+    </div>
+    <div class="body">
+      <div>
+        <div class="num">Direction 1 · recommended</div>
+        <h2 class="name">Dog-ear</h2>
+        <p class="phil">Everyone already bookmarks a page by folding its corner. Every saved link wears that fold, so the product explains itself before any label does.</p>
+      </div>
+      <div class="swatches">
+        <div class="sw"><i style="background:#FFC21A;box-shadow:inset 0 0 0 1.5px #1E1605"></i>Marigold<br>brand field</div>
+        <div class="sw"><i style="background:#1E1605"></i>Ink<br>text, action</div>
+        <div class="sw"><i style="background:#C2341A"></i>Tomato<br>search match</div>
+        <div class="sw"><i style="background:#FFFBF0;box-shadow:inset 0 0 0 1px #E3D7B5"></i>Leaf<br>cards</div>
+        <div class="sw"><i style="background:#5C4A1F"></i>Umber<br>secondary text</div>
+      </div>
+      <div class="typeset">
+        <div class="h">Find the recipe you saved in March</div>
+        <div class="b">Zilla Slab 700 headings, Work Sans 400 body. A slab reads firm and dependable at small sizes.</div>
+        <div class="f">Figures: 0123456789 · 12 Mar 2026</div>
+      </div>
+      <div class="demo">
+        <button class="btn" type="button">Save this page</button>
+        <div class="card">
+          <div class="t">Lemon ricotta pasta in 20 minutes</div>
+          <div class="u">recipes.example.com · saved 12 Mar</div>
+          <div class="s">…finish with <mark>lemon zest</mark> and a spoon of pasta water so the sauce…</div>
+          <span class="sample">Sample data</span>
+        </div>
+      </div>
+      <div class="meta">
+        <b>Base</b><span>Saturated marigold brand field; app work surface is Leaf (warm neutral from the marigold hue)</span>
+        <b>Scheme</b><span>Analogous warm (marigold, umber) with tomato for matches; ink carries the action at 11:1</span>
+        <b>Medium</b><span>Dimensional vector: flat shapes with one fold shadow</span>
+        <b>Signature</b><span>The folded corner on every saved item; it folds when you save</span>
+        <b>Motion</b><span>Functional. One moment: corner folds on save, 220 ms ease-out; reduced motion shows the fold without animation</span>
+        <b>Idea source</b><span>Everyday ritual: folding a page corner</span>
+        <b>Rests on</b><span>General web users; find it again</span>
+        <b>Calibrate</b><span>Mailchimp, for craft of a yellow brand field only</span>
+        <b>Risk</b><span>Yellow over large areas tires the eye; keep it to the brand band and the save moment, not behind lists</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2 INDEX -->
+  <article class="tile d2">
+    <div class="hero" aria-hidden="true">
+      <svg viewBox="0 0 420 260" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <filter id="sh" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0F1B2A" flood-opacity=".12"/></filter>
+        </defs>
+        <rect width="420" height="260" fill="#DDE5EC"/>
+        <g filter="url(#sh)">
+          <rect x="48" y="98" width="324" height="132" rx="8" fill="#FFFFFF"/>
+        </g>
+        <rect x="64" y="114" width="150" height="9" rx="2" fill="#0F1B2A"/>
+        <rect x="64" y="130" width="90" height="6" rx="2" fill="#8C99A6"/>
+        <rect x="64" y="148" width="72" height="7" rx="2" fill="#B5C0CA"/>
+        <rect x="140" y="146" width="60" height="11" rx="2" fill="#FFE45C"/>
+        <rect x="204" y="148" width="120" height="7" rx="2" fill="#B5C0CA"/>
+        <line x1="64" y1="172" x2="356" y2="172" stroke="#E4EAF0"/>
+        <rect x="64" y="186" width="130" height="9" rx="2" fill="#0F1B2A"/>
+        <rect x="64" y="202" width="70" height="6" rx="2" fill="#8C99A6"/>
+        <rect x="200" y="186" width="44" height="11" rx="2" fill="#FFE45C"/>
+        <g filter="url(#sh)">
+          <rect x="28" y="34" width="364" height="50" rx="8" fill="#FFFFFF" stroke="#00756A" stroke-width="2"/>
+        </g>
+        <circle cx="54" cy="59" r="8" fill="none" stroke="#0F1B2A" stroke-width="2"/>
+        <line x1="60" y1="65" x2="66" y2="71" stroke="#0F1B2A" stroke-width="2" stroke-linecap="round"/>
+        <text x="78" y="64" font-family="Hanken Grotesk, sans-serif" font-size="15" fill="#0F1B2A">pasta with lemon zest</text>
+        <rect x="236" y="50" width="2" height="18" fill="#00756A"/>
+        <text x="370" y="64" text-anchor="end" font-family="Hanken Grotesk, sans-serif" font-size="12" fill="#4A5868">2 found</text>
+      </svg>
+    </div>
+    <div class="body">
+      <div>
+        <div class="num">Direction 2</div>
+        <h2 class="name">Index</h2>
+        <p class="phil">The search box is the product. The page leads with one field and shows each result with the words you remembered highlighted inside the page text.</p>
+      </div>
+      <div class="swatches">
+        <div class="sw"><i style="background:#F3F6F9;box-shadow:inset 0 0 0 1px #D9E0E7"></i>Frost<br>surface</div>
+        <div class="sw"><i style="background:#0F1B2A"></i>Slate<br>text</div>
+        <div class="sw"><i style="background:#00756A"></i>Teal<br>action, focus</div>
+        <div class="sw"><i style="background:#FFE45C"></i>Marker<br>search match</div>
+        <div class="sw"><i style="background:#4A5868"></i>Steel<br>secondary text</div>
+      </div>
+      <div class="typeset">
+        <div class="h">Find the recipe you saved in March</div>
+        <div class="b">Hanken Grotesk 700 and 400, one family. Tight, neutral grotesk keeps results dense and scannable.</div>
+        <div class="f">Figures: 0123456789 · 12 Mar 2026</div>
+      </div>
+      <div class="demo">
+        <button class="btn" type="button">Save this page</button>
+        <div class="card">
+          <div class="t">Lemon ricotta pasta in 20 minutes</div>
+          <div class="u">recipes.example.com · saved 12 Mar</div>
+          <div class="s">…finish with <mark>lemon zest</mark> and a spoon of pasta water so the sauce…</div>
+          <span class="sample">Sample data</span>
+        </div>
+      </div>
+      <div class="meta">
+        <b>Base</b><span>Light and cool: Frost, a slate-tinted white</span>
+        <b>Scheme</b><span>Analogous cool (slate, teal) plus a yellow marker for matches only</span>
+        <b>Medium</b><span>UI composite: the product's own search UI, layered with soft depth</span>
+        <b>Signature</b><span>The marker highlight on matched words inside the page text</span>
+        <b>Motion</b><span>Functional. Results update as you type, 120 ms fade; no decorative motion</span>
+        <b>Idea source</b><span>Product mechanic: full-text search</span>
+        <b>Rests on</b><span>Search that works; quick, sharp, dependable</span>
+        <b>Calibrate</b><span>Linear, for craft of dense light UI only</span>
+        <b>Risk</b><span>Closest to the category; the marker is the only brand move, so it must appear everywhere a match does</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 3 WAYFINDER -->
+  <article class="tile d3">
+    <div class="hero" aria-hidden="true">
+      <svg viewBox="0 0 420 260" preserveAspectRatio="xMidYMid slice">
+        <rect width="420" height="260" fill="#0A0B0C"/>
+        <rect x="24" y="40" width="372" height="180" fill="#111315"/>
+        <rect x="24" y="40" width="372" height="6" fill="#FFB000"/>
+        <g font-family="Overpass, sans-serif" font-weight="800" fill="#F4F4F0">
+          <circle cx="58" cy="86" r="16" fill="#1B7D4E"/><text x="58" y="92" text-anchor="middle" font-size="16" fill="#fff">R</text>
+          <text x="86" y="93" font-size="22">Recipes</text>
+          <path d="M360 78 l14 8 l-14 8 M346 86 h28" stroke="#F4F4F0" stroke-width="4" fill="none" stroke-linecap="square"/>
+          <line x1="40" y1="112" x2="380" y2="112" stroke="#2A2E32" stroke-width="2"/>
+          <circle cx="58" cy="140" r="16" fill="#2F62D9"/><text x="58" y="146" text-anchor="middle" font-size="16" fill="#fff">W</text>
+          <text x="86" y="147" font-size="22">Work</text>
+          <path d="M360 132 l14 8 l-14 8 M346 140 h28" stroke="#F4F4F0" stroke-width="4" fill="none" stroke-linecap="square"/>
+          <line x1="40" y1="166" x2="380" y2="166" stroke="#2A2E32" stroke-width="2"/>
+          <circle cx="58" cy="194" r="16" fill="#D63A2F"/><text x="58" y="200" text-anchor="middle" font-size="16" fill="#fff">T</text>
+          <text x="86" y="201" font-size="22">Trip to Lisbon</text>
+          <path d="M360 186 l14 8 l-14 8 M346 194 h28" stroke="#F4F4F0" stroke-width="4" fill="none" stroke-linecap="square"/>
+        </g>
+      </svg>
+    </div>
+    <div class="body">
+      <div>
+        <div class="num">Direction 3</div>
+        <h2 class="name">Wayfinder</h2>
+        <p class="phil">Transit signage gets strangers to the right platform in seconds. Penyemat borrows its grammar: black panels, one bright signal colour, and a coloured bullet per collection.</p>
+      </div>
+      <div class="swatches">
+        <div class="sw"><i style="background:#111315;box-shadow:inset 0 0 0 1px #2A2E32"></i>Panel<br>surface</div>
+        <div class="sw"><i style="background:#F4F4F0"></i>Chalk<br>text</div>
+        <div class="sw"><i style="background:#FFB000"></i>Amber<br>action, match</div>
+        <div class="sw"><i style="background:linear-gradient(90deg,#1B7D4E 33%,#2F62D9 33% 66%,#D63A2F 66%)"></i>Lines<br>collections</div>
+        <div class="sw"><i style="background:#A9AEB3"></i>Steel<br>secondary text</div>
+      </div>
+      <div class="typeset">
+        <div class="h">Find the recipe you saved in March</div>
+        <div class="b">Overpass 800 and 400, drawn from US highway signage lettering. Overpass Mono for aligned counts only.</div>
+        <div class="f">Figures: 0123456789 · 12 Mar 2026</div>
+      </div>
+      <div class="demo">
+        <button class="btn" type="button">Save this page</button>
+        <div class="card">
+          <div class="t"><span class="bullet" style="background:#1B7D4E">R</span>Lemon ricotta pasta in 20 minutes</div>
+          <div class="u">recipes.example.com · saved 12 Mar</div>
+          <div class="s">…finish with <mark>lemon zest</mark> and a spoon of pasta water so the sauce…</div>
+          <span class="sample">Sample data</span>
+        </div>
+      </div>
+      <div class="meta">
+        <b>Base</b><span>Dark: Panel, a neutral near-black</span>
+        <b>Scheme</b><span>Neutral dark with one signal colour (amber) for action and matches; three line colours mark collections only</span>
+        <b>Medium</b><span>Flat signage panels, no shadows; hierarchy by size and bars</span>
+        <b>Signature</b><span>Collection bullets and the amber top bar, like a platform sign</span>
+        <b>Motion</b><span>Functional. Panels slide 180 ms when you change collection; reduced motion swaps instantly</span>
+        <b>Idea source</b><span>Culture and place: public transit wayfinding, made to move strangers fast</span>
+        <b>Rests on</b><span>Quick, sharp, dependable; find it in seconds</span>
+        <b>Calibrate</b><span>Transit (the app), for craft of line bullets only</span>
+        <b>Risk</b><span>Dark-only feels heavy for daytime general users; needs a light mode from day one</span>
+      </div>
+    </div>
+  </article>
+
+</main>
+
+<p class="foot">Combining is fine, for example the Index layout with the Dog-ear fold. The chosen direction then gets two or three layout alternatives for the core screens.</p>
+
+</body>
+</html>
